@@ -7,7 +7,7 @@ The [XROMM_MayaTools](https://bitbucket.org/xromm/xromm_mayatools/wiki/Home) she
 Thus, the motivation for the performing these operations outside of Maya is to increase **reproducibility**, **transparency**, and **ease of batch processing**.
 
 ## What this is, and what this is not
-Replicates Mayatools functions, allows for batch processing. Does not fully eliminate maya from workflow, still need to..
+This toolbox replicates the core functionality of the MayaTools shelf, as well as, allows for batch processing. Does not fully eliminate maya from workflow, still need to..
 
 ## Instructions
 
