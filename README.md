@@ -1,4 +1,7 @@
 # XROMM Tools (for R and MATLAB)
+![xromm-tools](https://user-images.githubusercontent.com/53494838/144144359-f118f0f4-9aab-4ba5-888a-2d77a5d76b5c.PNG)
+## What is this? (and what isn't it?)
+This toolbox replicates the core functionality of the [XROMM_MayaTools](https://bitbucket.org/xromm/xromm_mayatools/wiki/Home) shelf and introduces a workflow for the batch processing of [XROMM](https://www.xromm.org/) data directly from XMALab. Importantly, Autodesk Maya is still required in a key step in the workflow, and retaining Maya and MayaTools as resource for 'sanity-checks' and visualizations is definitely a good idea.
 
 ## Motivation
 The [XROMM](https://www.xromm.org/) (X-ray Reconstruction of Moving Morphology) community continues to grow rapidly, as does the use of XROMM data. Concurrently, the scientific community has adopted higher standards of data reproducibility and transparency of analysis; more often than not, researchers are required to submit both their data and code alongside a manuscript.
@@ -6,8 +9,6 @@ The [XROMM_MayaTools](https://bitbucket.org/xromm/xromm_mayatools/wiki/Home) she
 
 Overall, the motivation for performing these operations outside of Maya is to increase **reproducibility**, **transparency**, and **ease of batch processing** in XROMM projects. 
 
-## What is this? (and what isn't it?)
-This toolbox replicates the core functionality of the MayaTools shelf and introduces a workflow for the batch processing of XROMM data. Importantly, Maya is still required in a key step in the workflow, and we suggest retaining Maya and MayaTools as resource for both 'sanity-checks' and visualizations.
 
 ## Instructions
 
