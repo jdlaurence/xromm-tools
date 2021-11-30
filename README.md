@@ -1,4 +1,4 @@
-# XROMM Tools
+# XROMM Tools (for R and MATLAB)
 
 ## Motivation
 The XROMM community continues to grow rapidly, as does the use of XROMM data. Concurrently, the scientific community has adopted higher standards of data reproducibility and transparency of analysis; more often than not, researchers are required to submit both their data and code alongside a manuscript.
