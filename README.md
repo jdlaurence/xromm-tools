@@ -5,16 +5,19 @@ This toolbox replicates the core functionality of the [XROMM_MayaTools](https://
 
 ## Motivation
 The [XROMM](https://www.xromm.org/) (X-ray Reconstruction of Moving Morphology) community continues to grow rapidly, as does the use of XROMM data. Concurrently, the scientific community has adopted higher standards of data reproducibility and transparency of analysis; more often than not, researchers are required to submit both their data and code alongside a manuscript.
-The [XROMM_MayaTools](https://bitbucket.org/xromm/xromm_mayatools/wiki/Home) shelf, the standard toolbox for XROMM data processing, is powerful and user-friendly but is not ideal for the programmatic automation of data analysis. After exporting tracked data from XMALab, it is virtually impossible to reproduce a user's processing steps in Maya (unless they have meticulously documented every mouse-click). Fortunately, the actual mathematic operations underlying most data processing in Maya are (relatively) straightforward and, thus, replicable in common programming languages.
+The [XROMM_MayaTools](https://bitbucket.org/xromm/xromm_mayatools/wiki/Home) shelf, the standard toolbox for XROMM data processing, is powerful and user-friendly but is not ideal for the programmatic automation of data analysis. After exporting tracked data from XMALab, it is virtually impossible to reproduce a user's processing steps in Autodesk Maya (unless they have meticulously documented every mouse-click). Fortunately, the actual mathematic operations underlying most data processing in Maya are (relatively) straightforward and, thus, replicable in common programming languages.
 
 Overall, the motivation for performing these operations outside of Maya is to increase **reproducibility**, **transparency**, and **ease of batch processing** in XROMM projects. 
 
 
 ## Instructions
+While the R and MATLAB versions are functionally identidical, there are slight differences in terms of installation and use. Thus, follow these links to go to your desired language.\
+R instructions. MATLAB instructions.
+
 
 ## Credits
 ### XROMM and MayaTools
-[Dave Baier](https://biology.providence.edu/faculty-members/david-baier/) is the primary developer of XROMM_MayaTools, upon which the entirety of this repository is based. We are sincerely grateful for all of his work. Steve Gatesy and Beth Brainerd lead the development of XROMM as a, which itself is based on [See here](https://www.xromm.org/history/) for a full history of XROMM. 
+[Professor Dave Baier](https://biology.providence.edu/faculty-members/david-baier/) is the primary developer of XROMM_MayaTools, upon which the entirety of this toolbox is based. We are sincerely grateful for all of his work. Professsors Steve Gatesy and Beth Brainerd lead the development of XROMM, which itself was based on Prof. Gatesy's [Scientific Rotoscoping](https://onlinelibrary.wiley.com/doi/10.1002/jez.588) work. [See here](https://www.xromm.org/history/) for a full history of XROMM. 
 ### xromm-tools MATLAB
 [J.D. Laurence-Chasen](https://github.com/jdlaurence) developed the MATLAB version of xromm-tools over the duration of his PhD.
 
