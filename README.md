@@ -6,7 +6,7 @@ The [XROMM_MayaTools](https://bitbucket.org/xromm/xromm_mayatools/wiki/Home) she
 
 Overall, the motivation for performing these operations outside of Maya is to increase **reproducibility**, **transparency**, and **ease of batch processing** in XROMM projects. 
 
-## What this is, and what this is not
+## What is this? (and what isn't it?)
 This toolbox replicates the core functionality of the MayaTools shelf and introduces a workflow for the batch processing of XROMM data. Importantly, Maya is still required in a key step in the workflow, and we suggest retaining Maya and MayaTools as resource for both 'sanity-checks' and visualizations.
 
 ## Instructions
