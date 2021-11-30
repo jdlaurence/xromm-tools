@@ -13,7 +13,7 @@ This toolbox replicates the core functionality of the MayaTools shelf and introd
 
 ## Credits
 ### XROMM and MayaTools
-[Full history of XROMM and its development](https://www.xromm.org/history/). Dave Baier is the primary developer of XROMM_MayaTools, upon which the entirety of this repository is based. We are sincerely grateful for all of his work. Steve Gatesy and Beth Brainerd lead the development of XROMM as a, which itself is based on ...  
+Dave Baier is the primary developer of XROMM_MayaTools, upon which the entirety of this repository is based. We are sincerely grateful for all of his work. Steve Gatesy and Beth Brainerd lead the development of XROMM as a, which itself is based on [See here](https://www.xromm.org/history/) for a full history of XROMM. 
 ### xromm-tools MATLAB
 [J.D. Laurence-Chasen](https://github.com/jdlaurence) developed the MATLAB version of xromm-tools over the duration of his PhD.
 
