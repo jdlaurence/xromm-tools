@@ -1,0 +1,30 @@
+Package: xromm-tools-r
+Title: An R Package For Processing XROMM Data
+Version: 0.0.0.9000
+Authors@R: 
+    c(person(given = "Kara",
+           family = "Feilich",
+           role = c("aut", "cre"),
+           email = "kfeilich@gmail.com",
+           comment = c(ORCID = "0000-0001-6057-897X")),
+      person(given = "J.D.",
+           family = "Laurence-Chasen",
+           role = c("aut"),
+           email = "jdlaurence@uchicago.edu",
+           comment = c(ORCID = "0000-0001-6192-175X")))
+Description: An R package for handling XROMM data exported from XMALab. This
+    includes reformatting the rigid body transformation matrices. This package
+    still requires that some pre-processing be done in Autodesk Maya, but is an 
+    effort to minimize the amount of time spent in Maya.
+License: GPL (>= 3)
+Encoding: UTF-8
+LazyData: true
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.1.1
+Imports: 
+    abind,
+    utils,
+    pracma
+Suggests: 
+    testthat (>= 3.0.0)
+Config/testthat/edition: 3
