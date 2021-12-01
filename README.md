@@ -11,8 +11,7 @@ Overall, the motivation for performing these operations outside of Maya is to in
 
 
 ## Instructions
-While the R and MATLAB versions are functionally identical, there are slight differences in terms of installation and use. Thus, follow these links to go to your desired language.\
-[R instructions](https://github.com/jdlaurence/xromm-tools/blob/main/R/README.md). MATLAB instructions.
+The [R](https://github.com/jdlaurence/xromm-tools/tree/main/R) and [MATLAB](https://github.com/jdlaurence/xromm-tools/tree/main/MATLAB) subfolders in this repository contain functionally identical versions of the toolkit; we tried our best to keep things consistent. There are, however, slight differences in terms of installation and usage, so be sure to follow the instructions for the language you wish to use.
 
 
 ## Credits
