@@ -16,7 +16,7 @@ The [R](https://github.com/jdlaurence/xromm-tools/tree/main/R) and [MATLAB](http
 
 ## Credits
 ### XROMM and MayaTools
-[Professor Dave Baier](https://biology.providence.edu/faculty-members/david-baier/) is the primary developer of XROMM_MayaTools, upon which the entirety of this toolbox is based. We are sincerely grateful for all of his work. Professsors Steve Gatesy and Beth Brainerd lead the development of XROMM, which itself was based on Prof. Gatesy's [Scientific Rotoscoping](https://onlinelibrary.wiley.com/doi/10.1002/jez.588) work. [See here](https://www.xromm.org/history/) for a full history of XROMM. 
+[Professor Dave Baier](https://biology.providence.edu/faculty-members/david-baier/) is the primary developer of XROMM_MayaTools, upon which the entirety of this toolbox is based. We are sincerely grateful for all of his work. Professors Steve Gatesy and Beth Brainerd lead the development of XROMM, which itself was based on Prof. Gatesy's [Scientific Rotoscoping](https://onlinelibrary.wiley.com/doi/10.1002/jez.588) work. [See here](https://www.xromm.org/history/) for a full history of XROMM. 
 ### xromm-tools MATLAB
 [J.D. Laurence-Chasen](https://github.com/jdlaurence) developed the MATLAB version of xromm-tools over the duration of his PhD.
 
