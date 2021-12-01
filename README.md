@@ -1,18 +1,18 @@
-# XROMM Tools (for R and MATLAB)
+# XROMM Tools
 ![xromm-tools](https://user-images.githubusercontent.com/53494838/144144359-f118f0f4-9aab-4ba5-888a-2d77a5d76b5c.PNG)
 ## What is this? (and what isn't it?)
-This toolbox replicates the core functionality of the [XROMM_MayaTools](https://bitbucket.org/xromm/xromm_mayatools/wiki/Home) shelf and introduces a workflow for the batch processing of [XROMM](https://www.xromm.org/) data directly from XMALab. Importantly, Autodesk Maya is still required in a key step in the workflow, and retaining Maya and MayaTools as resource for 'sanity-checks' and visualizations is definitely a good idea.
+This toolbox replicates the core functionality of the [XROMM_MayaTools](https://bitbucket.org/xromm/xromm_mayatools/wiki/Home) shelf and introduces a workflow for the batch processing of [XROMM](https://www.xromm.org/) (X-ray Reconstruction of Moving Morphology) data directly from XMALab. Importantly, Autodesk Maya is still required in a key step in the workflow, and retaining Maya and MayaTools as resource for 'sanity-checks' and visualizations is definitely a good idea.
 
 ## Motivation
-The [XROMM](https://www.xromm.org/) (X-ray Reconstruction of Moving Morphology) community continues to grow rapidly, as does the use of XROMM data. Concurrently, the scientific community has adopted higher standards of data reproducibility and transparency of analysis; more often than not, researchers are required to submit both their data and code alongside a manuscript.
+The [XROMM](https://www.xromm.org/) community continues to grow rapidly, as does the use of XROMM data. Concurrently, the scientific community has adopted higher standards of data reproducibility and transparency of analysis; more often than not, researchers are required to submit both their data and code alongside a manuscript.
 The [XROMM_MayaTools](https://bitbucket.org/xromm/xromm_mayatools/wiki/Home) shelf, the standard toolbox for XROMM data processing, is powerful and user-friendly but is not ideal for the programmatic automation of data analysis. After exporting tracked data from XMALab, it is virtually impossible to reproduce a user's processing steps in Autodesk Maya (unless they have meticulously documented every mouse-click). Fortunately, the actual mathematic operations underlying most data processing in Maya are (relatively) straightforward and, thus, replicable in common programming languages.
 
 Overall, the motivation for performing these operations outside of Maya is to increase **reproducibility**, **transparency**, and **ease of batch processing** in XROMM projects. 
 
 
 ## Instructions
-While the R and MATLAB versions are functionally identidical, there are slight differences in terms of installation and use. Thus, follow these links to go to your desired language.\
-R instructions. MATLAB instructions.
+While the R and MATLAB versions are functionally identical, there are slight differences in terms of installation and use. Thus, follow these links to go to your desired language.\
+[R instructions](https://github.com/jdlaurence/xromm-tools/blob/master/instructions.md). MATLAB instructions.
 
 
 ## Credits
