@@ -1,4 +1,4 @@
-# XROMM Tools
+# xromm-tools
 ![xromm-tools](https://user-images.githubusercontent.com/53494838/144144359-f118f0f4-9aab-4ba5-888a-2d77a5d76b5c.PNG)
 ## What is this? (and what isn't it?)
 This toolbox replicates the core functionality of the [XROMM_MayaTools](https://bitbucket.org/xromm/xromm_mayatools/wiki/Home) shelf and introduces a workflow for the batch processing of [XROMM](https://www.xromm.org/) (X-ray Reconstruction of Moving Morphology) data directly from XMALab. Importantly, Autodesk Maya is still required in a key step in the workflow, and retaining Maya and MayaTools as resource for 'sanity-checks' and visualizations is definitely a good idea.
@@ -14,7 +14,14 @@ The [R](https://github.com/jdlaurence/xromm-tools/tree/main/R) and [MATLAB](http
 
 ## Generalized Quickstart
 Regardless of implementation (R vs. MATLAB), the basic flow of data through the `xromm-tools` pipeline is the same. You'll need:  
+* This package installed
+* Autodesk Maya and the MayaTools shelf installed
+* Bone mesh models and corresponding rigid body transformations from XMALab  
+* Optional: 3D points from XMALab
 
+The first step is placing anatomical coordinate systems and exporting their positions from Maya. It's totally fine if the bone models are already animated and/or you've already placed the ACSs. You'll use standard MayaTools functions to export the position of the ACSs from Maya to CSV files. If you ever want to change the position/orientation of an ACS, or create a new one, you'll re-export its position.
+
+The rest of the workflow is in R or MATLAB. You'll import the ACS positions, RBTs, and 3D points, then calculate JCS motions and/or 3D point positions relative to bones with the provided scripts. If you want to add more trials or re-run an analysis across all trials, you won't ever need to re-animate bones or re-calculate oRel again. 
 
 ## Credits
 ### XROMM and MayaTools
