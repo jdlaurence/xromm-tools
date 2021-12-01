@@ -12,7 +12,7 @@ Overall, the motivation for performing these operations outside of Maya is to in
 
 ## Instructions
 While the R and MATLAB versions are functionally identical, there are slight differences in terms of installation and use. Thus, follow these links to go to your desired language.\
-[R instructions](https://github.com/jdlaurence/xromm-tools/blob/master/instructions.md). MATLAB instructions.
+[R instructions](https://github.com/jdlaurence/xromm-tools/blob/main/R/README.md). MATLAB instructions.
 
 
 ## Credits
