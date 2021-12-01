@@ -9,9 +9,11 @@ The [XROMM_MayaTools](https://bitbucket.org/xromm/xromm_mayatools/wiki/Home) she
 
 Overall, the motivation for performing these operations outside of Maya is to increase **reproducibility**, **transparency**, and **ease of batch processing** in XROMM projects. 
 
+## Installation + Instructions 
+The [R](https://github.com/jdlaurence/xromm-tools/tree/main/R) and [MATLAB](https://github.com/jdlaurence/xromm-tools/tree/main/MATLAB) subfolders in this repository contain functionally identical versions of the toolkit; we tried our best to keep things consistent. There are, however, slight differences in terms of installation and usage, so be sure to follow the instructions for the language you wish to use (located in their respective subfolders).
 
-## Installation + Instructions
-The [R](https://github.com/jdlaurence/xromm-tools/tree/main/R) and [MATLAB](https://github.com/jdlaurence/xromm-tools/tree/main/MATLAB) subfolders in this repository contain functionally identical versions of the toolkit; we tried our best to keep things consistent. There are, however, slight differences in terms of installation and usage, so be sure to follow the instructions for the language you wish to use.
+## Generalized Quickstart
+Regardless of implementation (R vs. MATLAB), the basic flow of data through the `xromm-tools` pipeline is the same. You'll need:  
 
 
 ## Credits
