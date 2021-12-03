@@ -19,7 +19,21 @@ function [xyz_matrix] = import_xyz_points(filename)
 % Written by J.D. Laurence-Chasen 2021
 
 if ischar(filename) % assume it's a filename
-    x = csvread(filename,1,0);   
+    
+    tmp = csvread(filename,1,0);
+    % check if frame numbers
+    if rem(tmp,3) ~= 0
+        frameNum = 1;
+    else
+        frameNum = 0;
+    end
+    
+    try
+        x = csvread(filename,0,frameNum); % no header
+    catch
+        x = csvread(filename,1,frameNum); % column headers
+    end
+    
 elseif isnumeric(filename)  
     x = filename;  
 else

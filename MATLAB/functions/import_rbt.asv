@@ -24,18 +24,14 @@ function [rbt_matrix] = import_rbt(filename)
 % Check input format
 if ischar(filename) % assume it's a filename
     
-    tmp = csvread(filename,1,0);
     % check if frame numbers
-    if rem(tmp,16) ~= 0
-        frameNum = 1;
-    else
-        frameNum = 0;
-    end
+
+    
     
     try
-        x = csvread(filename,0,frameNum); % no header
+        x = csvread(filename,0,0); % no header
     catch
-        x = csvread(filename,1,frameNum); % column headers
+        x = 
     end
     
 elseif isnumeric(filename)
