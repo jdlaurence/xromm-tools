@@ -24,6 +24,10 @@ Note the dependencies of this R package. You will need at a minimum:
 
 
 ## Documentation / Tutorial
+After installing and loading the package as above, you'll want to go through the vignette. To access that, type the following into your console.
+```
+vignette("xrommToolsR-vignette", package = "xrommToolsR")
+```
 
 ## Quickstart
 
