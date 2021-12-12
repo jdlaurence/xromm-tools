@@ -215,22 +215,9 @@ plot(z_rot, xlab = "Frames", ylab = "Rotation (deg)", main = "TMJ Z-axis Rotatio
 
 ### 8. Automate Calculations Across Multiple Trials
 
-Now let's fo an example of how to automate this across multiple trials. Let's first duplicate the files with new names so we have some data to work with. NOTE-- you will be copying files directly to your project directory, so make sure you replace these variables as needed! (This will also let you practice using local files instead of ones built in to the package.)
+Now let's do an example of how to automate this across multiple trials. I've duplicated some files in the package for you to use.
 
-```{r copying}
-# Replace the second argument in each of these with your desired output filepath
-file.copy(system.file("extdata", "3dpts.csv", package = "xrommToolsR"),
-          "../../../xromm-batch-testing/3dpts_trial01.csv")
-file.copy(system.file("extdata", "3dpts.csv", package = "xrommToolsR"),
-          "../../../xromm-batch-testing/3dpts_trial02.csv")
-file.copy(system.file("extdata", "rbt.csv", package = "xrommToolsR"),
-          "../../../xromm-batch-testing/rbt_trial01.csv")
-file.copy(system.file("extdata", "rbt.csv", package = "xrommToolsR"),
-          "../../../xromm-batch-testing/rbt_trial02.csv")
-
-```
-
-Now in this section,  we'll repeat all of the previous steps, iterating through the two trials, but generate an output variable `jcs_data` that is a list where each item contains the jcs data from a single trial.  Note, for consistency with the MATLAB tutorial, we will be using for loops. HOWEVER, if you are comfortable with the `apply` functions, or the `map()` and `map2d()` functions in `purrr` -- that would make more sense in an R context. In the latter case, I would probably make greater use of Rs "list" structures, and not use 4-dimension arrays.
+In this section,  we'll repeat all of the previous steps, iterating through the two trials, but generate an output variable `jcs_data` that is a list where each item contains the jcs data from a single trial.  Note, for consistency with the MATLAB tutorial, we will be using for loops. HOWEVER, if you are comfortable with the `apply` functions, or the `map()` and `map2d()` functions in `purrr` -- that would make more sense in an R context. In the latter case, I would probably make greater use of Rs "list" structures, and not use 4-dimension arrays.
 
 ```{r iteration}
 mandible_idx <- which(rbnames=="Mandible")
@@ -263,10 +250,10 @@ for (tr in c(1:n_trials)){
   # probably be paste0(paste0("rbt_", trialnames[tr]),".csv"). The nested 
   # calls to paste0 are because the variable part of the name
   # is in the middle of the filename. Thank JD...
-  rbt_filename <- paste0(paste0("../../../xromm-batch-testing/rbt_",
-                                trialnames[tr]), ".csv")
-  xyz_filename <- paste0(paste0("../../../xromm-batch-testing/3dpts_", 
-                                trialnames[tr]), ".csv")
+  rbt_filename <- system.file("extdata", paste0(paste0("rbt_",
+                                trialnames[tr]), ".csv"), package = "xrommToolsR")
+  xyz_filename <- system.file("extdata", paste0(paste0("3dpts_", 
+                                trialnames[tr]), ".csv"), package = "xrommToolsR")
   rbts <- import_rbt(rbt_filename)
   xyzpoints <- import_xyz_points(xyz_filename)
   
