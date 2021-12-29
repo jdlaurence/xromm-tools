@@ -1,0 +1,301 @@
+---
+title: "xrommRtools Vignette"
+output: rmarkdown::html_vignette
+description: Use this if this is your first time using xrommRtools. It will teach you the basic ideas and workflow. 
+vignette: >
+  %\VignetteIndexEntry{xrommRtools Vignette}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+# XROMM Automation Tutorial
+
+The XROMM community continues to grow rapidly, as does the use of XROMM data. Concurrently, the scientific community has adopted higher standards of data reproducibility and transparency of analysis; more often than not, researchers are required to submit both their data and code alongside a manuscript.  
+
+The XROMM_MayaTools shelf, the standard toolbox for XROMM data processing, is powerful and user-friendly but is not ideal for the programmatic automation of data analysis. Thus, the motivation for the performing these operations outside of Maya is to increase  **reproducibility**, **transparency**, and **ease of batch processing**.  
+
+This script will walk you through how to replicate several operations typically performed manually in Maya with a set of R functions.
+
+Specificially, it will demonstrate how to:
+
+* Transform 3D points from XMALab into 'Anatomical space'
+    + In Maya: oRel of xyz point/s relative to an anatomical coordinate system (ACS) parented to bone model
+* Compute joint coordinate system (JCS) rotations and translations
+    + In Maya: oRel of proximal and distal ACSs parented to bone models
+* Batch process multiple trials
+    + In Maya: Concatenate all trials into a single CSV, re-run MayaTools functions
+    
+This script will use the standard Pig tutorial dataset. [XMA Portal Source](http://xmaportal.org/sandbox/larequest.php?request=explorePublicStudy&amp;StudyID=49&amp;instit=SANDBOX1)  
+
+Let's go!  
+
+Written by J.D. Laurence-Chasen and Kara Feilich, 2021
+
+
+### 1. Setup
+
+**Make sure you open R in the directory containing the tutorial data files.** Note that for the sake of this tutorial, I have included the tutorial data in the R package, so you don't necessarily need it installed in your project directory. HOWEVER, when you use these scripts with your own data, you will need the relevant files in the project directory. You will also need the ACS files exported from Maya, generated following the instructions [here](https://github.com/jdlaurence/xromm-tools/blob/main/MATLAB/manual/get-acs-positions.md)  
+
+In general, you should have the follwing files in this directory: your R script,  a Maya file,  your two CSV files of 3D points and rigid body transformations (RBTs) from XMALab, and your ACS files from Maya. 
+
+
+```{r setup}
+library(xrommToolsR)
+
+# Note-- Generally here I would check for all of the contents of my project directory, but since for the tutorial they are all internal to the package, there's no need.
+
+# Uncomment if checking your own files
+# dir()
+```
+
+Once you have loaded the package, we can begin to import the relevant data.
+
+### 2. Import Rigid Body Transformations
+
+Now let's import the 3D data into our R session. 
+
+First, we'll create a variable that contains the names of the rigid bodies we have in the RBT file (in the correct order!) This will help you keep track.
+
+```{r labelRBTs}
+# this is the order of rbts in the internal rbt.csv file
+rbnames <- c("Mandible", "Cranium")  
+```
+
+The tutorial RBTs (mandible and cranium) have been exported from XMALab in a "Combined" file. If you export your RBTs as single files--which is totally fine-- be sure to have informative and consistent names across trials.
+
+Now let's define index variables that will help us extract specific RBTs from a single variable. 
+
+```{r indexVariables}
+mandible_idx <- which(rbnames == "Mandible")  # Will equal 1, mandible rbt is first in rbt.csv
+cranium_idx <- which(rbnames == "Cranium")   # Will equal 2, cranium rbt is second in rbt.csv
+n_rbs <- length(rbnames)  # for initializing outputs later on
+
+# Note: Using which() is better practice than simply setting mandible_idx <- 1,
+# as if you ever have a different order you can just change the rbnames variable
+# and the rest will automatically reflect that change.
+```
+
+Now let's actually do the import! `import_rbt()` reads the rigid body transformation csv file. RBTs are just expanded 4 x 4 transformation matrices for every frame of video, so the function also reformats the file to be dimensions: [4 x 4 x n_frames x n_rigidbodies] to make the subsequent matrix multiplication easier. Again, if you have exported your RBTs as single files, you will need to call `import_rbt()` for each file -- see commented out code.
+
+```{r importRBTs}
+# Note: The system.file call is to retrieve the csv contained within the package
+rbts <- import_rbt(system.file("extdata","rbt.csv", package = "xrommToolsR"))
+
+# For your own data, you would call:
+# rbts <- import_rbt("your_csv_file_name_here")
+
+#  # If you have RBTs in separate files, you would do this:
+# library(abind)  
+#  # Make a list of each rbt csv filename
+#   my_rbt_list <- list("file1.csv", "file2.csv",...)
+#  # Make list of arrays by calling import_rbt() multiple times
+#   rbt_list <- lapply(my_rbt_list, import_rbt)
+#  # Array bind the list of arrays along the 4th dimension
+#   rbts <- abind(rbt_list, along = 4)
+```
+
+How is the array of imported RBTs structured?
+
+To access the rigid body transformation (4 x 4 transformation matrix) of the mandible at frame 15 of the data (one row of the CSV from XMALab), you'd do this:
+```{r exampleFrame}
+fr <- 15  # frame 15, arbitrarily chosen
+rbts[,,fr,mandible_idx]
+```
+
+### 3. Import 3D Points
+
+`import_xyz_points()` reads the 3D points file. It's nothing fancy, but it reformats the data into a 3-D array of dimension [npoints x XYZpos x nframes] to make indexing easier down the line. 
+
+```{r import3dpts}
+xyzpoints <- import_xyz_points(system.file("extdata", "3dpts.csv", package = "xrommToolsR"))
+
+# Again, the system.file call is to access data internal to the package. For # your own data, you would use:
+# xyzpoints <- import_xyz_points("your_csv_file_name_here")
+```
+
+How is the array of 3D points structured?
+
+To access a single point (say, point 3)'s xyz position at frame 15, you'd do this:
+```{r examplePt}
+point <- 3
+fr <- 15
+xyzpoints[point,,fr]
+```
+
+### 4. Import Anatomical Coordinate Systems (ACS) positions (transformation matrices)
+
+Next, we need to import the positions of the ACSs. Again, these will have to be exported from Maya following the instructions [here](https://github.com/jdlaurence/xromm-tools/blob/main/MATLAB/manual/get-acs-positions.md) .
+
+This step has already been performed for the pig dataset. `import_acs_rel_bone()` is essentially `import_rbt()`, since they are both reading transformation matrices in the 1x16 Maya/XMALab format, but the ACS transformation matrices are static, so the format is just a 2-D [4x4] matrix. 
+```{r importACS}
+library(abind)
+
+# We have named our ACS CSV files as [rbname]_acs_tm.csv, so the list of
+# relevant filenames can be built this way: 
+my_acs_list <- paste0(rbnames, "_acs_tm.csv")
+
+# Some weirdness to access each file contained within the package individually... with your own data you can skip these lines
+my_acs_list <- list(
+  system.file("extdata", my_acs_list[1], package = "xrommToolsR"),
+  system.file("extdata", my_acs_list[2], package = "xrommToolsR"))
+
+# All you'd have to do is this: 
+acs_list <- lapply(my_acs_list, import_acs_rel_bone)  # Makes a list of matrices
+acs_tms <- abind(acs_list, along = 3) # Binds those matrices along a 3rd dimension
+```
+
+Let's print one of them, just to check!
+```{r acsCheck}
+# Mandible ACS position in 4x4 transformation matrix format, 
+# relative to the bone:
+acs_tms[,,mandible_idx]
+```
+
+### 5. Calculate ACS Motion
+
+All of the data are now imported! The next step is to calculate ACS motion, or "animate" the ACSs. Mathematically, that's just multiplying the bones' tranformation by the ACS position.
+
+For intuition: Imagine we are in Maya and you have positioned the ACS on the un-animated bone model exactly how you want it. You parent the ACS to the bone models, and then apply the rigid body transformation to the bone,  animating it. It's that apply-animation step we're doing. But the mathematical output is the animated ACS's position through time, not the bone model's position.
+
+```{r animateACS}
+# Note for R users: There are other ways to do this than using a for-loop.
+# I am using a loop here (and going forward) just for ease of intuition. 
+new_rbt_list <- vector(mode = "list", length = n_rbs)
+for (rb in c(1:n_rbs)){
+  tmp_rbt <- rbts[,,,rb]
+  tmp_acs_tm <- acs_tms[,,rb]
+  new_rbt_list[[rb]] <- apply_acs_tm(tmp_rbt, tmp_acs_tm)
+}
+# Then we bind the list into a nice 4-D array
+new_rbts <- abind(new_rbt_list, along = 4)
+```
+
+### 6. Calculate Motion of 3D Points in Anatomical Space
+
+Now the fun part. Let's transform the 3D points from arbitrary cube space into a ~meaningful~ cranial coordinate system (as defined by where the ACS was placed in Maya). Remember, a coordinate system transformation is essentially asking: What is the motion of element A relative to element B, where element B is the new coordinate system/origin.
+
+```{r relMot1}
+# Syntax:
+# rel_motion <- calculate_relative_motion(reference_element_xform, mobile_element_xform)
+
+new_xyzpoints_list <- vector(mode = "list", length = n_rbs)
+for (rb in c(1:n_rbs)){
+  tmp_pts <- calculate_relative_motion(new_rbts[,,,rb],
+                                       xyzpoints)
+  new_xyzpoints_list[[rb]] <- tmp_pts
+}
+new_xyzpoints <- abind(new_xyzpoints_list, along = 4)
+```
+
+### 7. Quantify TMJ motion via Joint Coordinate System
+
+Now let's quantify motion at the TMJ using a joint coordinate system (JCS).
+```{r JCSmotion}
+new_cranium_rbt <- new_rbts[,,,cranium_idx]
+new_mandible_rbt <- new_rbts[,,,mandible_idx]
+
+jcs_tm <- calculate_relative_motion(new_cranium_rbt, new_mandible_rbt)
+
+# Convert to Tait-Bryan angles and translations, the JCS standard
+jcs_data <- convert_tm_to_jcs(jcs_tm)
+```
+
+Let's plot the results to see if things make sense.
+```{r figure1, fig.height = 3, fig.width=5}
+z_rot <- jcs_data[,6]  # Z axis rotations are always the 6th column of JCS data
+plot(z_rot, xlab = "Frames", ylab = "Rotation (deg)", main = "TMJ Z-axis Rotation")
+```
+
+### 8. Automate Calculations Across Multiple Trials
+
+Now let's do an example of how to automate this across multiple trials. I've duplicated some files in the package for you to use.
+
+In this section,  we'll repeat all of the previous steps, iterating through the two trials, but generate an output variable `jcs_data` that is a list where each item contains the jcs data from a single trial.  Note, for consistency with the MATLAB tutorial, we will be using for loops. HOWEVER, if you are comfortable with the `apply` functions, or the `map()` and `map2d()` functions in `purrr` -- that would make more sense in an R context. In the latter case, I would probably make greater use of Rs "list" structures, and not use 4-dimension arrays.
+
+```{r iteration}
+mandible_idx <- which(rbnames=="Mandible")
+cranium_idx <- which(rbnames=="Cranium")
+n_rbs <- length(rbnames)
+
+# import ACS positions ####
+
+# Make acs_filenames a vector of the location of your ACS TMs
+# Again there's weirdness here because it's internal to the package
+acs_filenames <- list(system.file("extdata", paste0(rbnames[1],"_acs_tm.csv"), package = "xrommToolsR"),
+                   system.file("extdata", paste0(rbnames[2], "_acs_tm.csv"), package = "xrommToolsR"))
+
+acs_tms_list <- lapply(acs_filenames, import_acs_rel_bone)
+acs_tms <- abind(acs_tms_list, along = 3)  # combines a list of 2d arrays into one 3D array
+
+# Set trial names to import ####
+trialnames <- c("trial01", "trial02")
+n_trials <- length(trialnames)
+
+# Initialize lists for outputs ####
+xyzpoints_bytrial <- vector(mode ="list", length = n_trials)  # This will be XYZ points in anatomical coordinate systems
+jcs_data_bytrial <- vector(mode = "list", length = n_trials)  # This will be TMJ JCS data
+
+# Iterate over trials ####
+for (tr in c(1:n_trials)){
+  # Having consistent filename structure/prefixes is ESSENTIAL for automating
+  # across trials. Here I have the filepath wonky because I have to test 
+  # things outside of my (the package's) directory. For you, this will 
+  # probably be paste0(paste0("rbt_", trialnames[tr]),".csv"). The nested 
+  # calls to paste0 are because the variable part of the name
+  # is in the middle of the filename. Thank JD...
+  rbt_filename <- system.file("extdata", paste0(paste0("rbt_",
+                                trialnames[tr]), ".csv"), package = "xrommToolsR")
+  xyz_filename <- system.file("extdata", paste0(paste0("3dpts_", 
+                                trialnames[tr]), ".csv"), package = "xrommToolsR")
+  rbts <- import_rbt(rbt_filename)
+  xyzpoints <- import_xyz_points(xyz_filename)
+  
+  # Calculate ACS motion
+  new_rbts_list <- vector(mode = "list", length = n_rbs)
+  for (rb in c(1:n_rbs)){
+    tmp_rbt <- rbts[,,,rb]
+    tmp_acs_tm <-acs_tms[,,rb]
+    new_rbts_list[[rb]] <- apply_acs_tm(tmp_rbt, tmp_acs_tm)
+  }
+  new_rbts <- abind(new_rbt_list, along = 4)  # Go from a list to an array for consistency with MATLAB
+  
+  # Transform XYZ points into anatomical coordinate systems
+  new_xyzpoints_list <- vector(mode = "list", length = n_rbs)
+  for (rb in c(1:n_rbs)){
+    tmp_pts <- calculate_relative_motion(new_rbts[,,,rb], xyzpoints)
+    new_xyzpoints_list[[rb]] <- tmp_pts
+  }
+  new_xyzpoints <- abind(new_xyzpoints_list, along = 4)
+  
+  # Save to the output
+  xyzpoints_bytrial[[tr]] <- new_xyzpoints
+  
+  # Calculate TMJ JCS
+  new_cranium_rbt <- new_rbts[,,,cranium_idx]
+  new_mandible_rbt <- new_rbts[,,,mandible_idx]
+  jcs_tm <- calculate_relative_motion(new_cranium_rbt, new_mandible_rbt)
+  
+  # Convert to tait-bryan angles and translations, the jcs standard
+  jcs_data <- convert_tm_to_jcs(jcs_tm)
+  
+  # Save to the output
+  jcs_data_bytrial[[tr]] <- jcs_data
+}
+```
+
+At this point in the MATLAB tutorial, JD says "And that's it!". However, for R users this is admittedly clunky. But yes, that is it. At some point I could re-write these scripts to be more R-ish.  Fewer for loops, fewer arrays, more lists and lapplys.
+
+Now let's plot the results to see if they look the same.
+```{r figure2, fig.height = 6, fig.width=5}
+par(mfrow = c(2,1))
+for(tr in c(1:n_trials)){
+  zrot <- jcs_data_bytrial[[tr]][,6]  #z-axis rotations
+  plot(zrot, xlab = "Frames", ylab = "Rotation (deg)", main = trialnames[tr])
+}

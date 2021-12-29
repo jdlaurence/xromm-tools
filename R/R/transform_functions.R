@@ -302,7 +302,7 @@ convert_tm_to_jcs <- function(tm){
       translation <- tm[1:3, 4, fr]  # Translation
       # Decompose transformation to tait-bryan angles
       rotation <- rot2taitbryan(tm[1:3, 1:3, fr], "ZYX")
-      jcs_data[i,] <- c(translation, rotation[3], rotation[2], rotation[1])
+      jcs_data[fr,] <- c(translation, rotation[3], rotation[2], rotation[1])
     }
   }
   jcs_data
