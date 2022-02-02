@@ -4,6 +4,12 @@ Welcome dear reader, to the wild world of XROMM in R. Let's talk about how to us
 
 ## Installation
 I've developed this code as an R package, which means you can install it, the vignette, and the tutorial data all in one fell swoop from within R.
+But first, outside of R, you will need to make sure you have `pandoc` to open the vignette.  You can get `pandoc` here: 
+[Pandoc](https://pandoc.org/)
+
+If you do not have pandoc installed, the next steps will throw an error.
+
+Now, you install the package from within R,
 Using devtools:
 
 ```
