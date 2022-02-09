@@ -13,7 +13,7 @@ The contents of the package are as follows:
 * functions - a set of processing functions, the core of this toolbox
 * manual - a tutorial, [walk-through script](https://github.com/jdlaurence/xromm-tools/blob/main/MATLAB/manual/xromm_tools_matlab_tutorial.mlx) that can also serve as a template for your analysis.
 
-**Please, please, please, work through the tutorial.mlx script before looking at the quickstart listed below, or trying your own data. I promise it'll help. **
+**Please, please, please, work through the tutorial.mlx script before looking at the quickstart listed below, or trying your own data. I promise it'll help.**
 
 ## Quickstart
 
