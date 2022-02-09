@@ -20,7 +20,7 @@ Regardless of implementation (R vs. MATLAB), the basic flow of data through the 
 * Bone mesh models and corresponding rigid body transformations from XMALab  
 * Optional: 3D points from XMALab
 
-The first step is placing anatomical coordinate systems and exporting their positions from Maya. It's totally fine if the bone models are already animated and/or you've already placed the ACSs. You'll use standard MayaTools functions to export the position of the ACSs from Maya to CSV files. If you ever want to change the position/orientation of an ACS, or create a new one, you'll re-export its position.
+The first step is [placing anatomical coordinate systems and exporting their positions from Maya](https://github.com/jdlaurence/xromm-tools/blob/main/MATLAB/manual/get-acs-positions.md). It's totally fine if the bone models are already animated and/or you've already placed the ACSs. You'll use standard MayaTools functions to export the position of the ACSs from Maya to CSV files. If you ever want to change the position/orientation of an ACS, or create a new one, you'll re-export its position.
 
 The rest of the workflow is in R or MATLAB. You'll import the ACS positions, RBTs, and 3D points, then calculate JCS motions and/or 3D point positions relative to bones with the provided scripts. If you want to add more trials or re-run an analysis across all trials, you won't ever need to re-animate bones or re-calculate oRel again. 
 
