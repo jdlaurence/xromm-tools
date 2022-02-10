@@ -13,7 +13,7 @@ The contents of the package are as follows:
 * functions - a set of processing functions, the core of this toolbox
 * manual - a tutorial, [walk-through script](https://github.com/jdlaurence/xromm-tools/blob/main/MATLAB/manual/xromm_tools_matlab_tutorial.mlx) that can also serve as a template for your analysis.
 
-**Please, please, please, work through the tutorial.mlx script before looking at the quickstart listed below, or trying your own data. I promise it'll help.**
+**Please, please, please, work through the tutorial.mlx script before looking at the quickstart listed below or trying your own data. I promise it'll help.**
 
 ## Quickstart
 
@@ -65,13 +65,13 @@ new_pts = calculate_relative_motion(new_rbt, xyzpoints);   % Note, you may need 
 
 #### Quantify motion using a JCS
 ```matlab
-%If new_rbt is combined with multiple rigid bodies
+% If new_rbt is combined with multiple rigid bodies
 new_cranium_rbt = new_rbt(:,:,:,cranium_idx);
 new_mandible_rbt = new_rbt(:,:,:,mandible_idx);
 
 jcs_tm = calculate_relative_motion(new_cranium_rbt, new_mandible_rbt);
 
-# Convert to Tait-Bryan angles and translations, the JCS standard
+% Convert to Tait-Bryan angles and translations, the JCS standard
 jcs_data = convert_tm_to_jcs(jcs_tm);
 
 ```
