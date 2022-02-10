@@ -1,20 +1,25 @@
 # xromm-tools
 ![xromm-tools](https://user-images.githubusercontent.com/53494838/144144359-f118f0f4-9aab-4ba5-888a-2d77a5d76b5c.PNG)
 ## What is this? (and what isn't it?)
-This toolbox replicates the core functionality of the [XROMM_MayaTools](https://bitbucket.org/xromm/xromm_mayatools/wiki/Home) shelf and introduces a workflow for the batch processing of [XROMM](https://www.xromm.org/) (X-ray Reconstruction of Moving Morphology) data directly from XMALab. In bypassing Autodesk Maya, all downstream analysis (ACS + JCS calculation, statistics, figure generation, etc.) can be performed in a single programming environment (R or MATLAB). Importantly, Autodesk Maya is still required in a key step in the workflow, and retaining Maya and MayaTools as resource for 'sanity-checks' and visualizations is definitely a good idea.
+This toolbox replicates the core functionality of the [XROMM_MayaTools](https://bitbucket.org/xromm/xromm_mayatools/wiki/Home) shelf and introduces a workflow for the batch processing of [XROMM](https://www.xromm.org/) (X-ray Reconstruction of Moving Morphology) data directly from XMALab. In bypassing Autodesk Maya, all downstream analysis (ACS + JCS calculation, statistics, figure generation, etc.) can be performed in a single programming environment (R or MATLAB). 
 
-## Motivation
+Importantly, Autodesk Maya is still required in a key step in the workflow, and retaining Maya and MayaTools as resource for 'sanity-checks' and visualizations is a necessity.
+
+## Why make this?
 The XROMM community continues to grow rapidly, as does the use of XROMM data. Concurrently, the scientific community has adopted higher standards of data reproducibility and transparency of analysis; more often than not, researchers are required to submit both their data and code alongside a manuscript.  
 
-The XROMM_MayaTools shelf, the standard toolbox for XROMM data processing, is powerful and user-friendly but is not ideal for the programmatic automation of data analysis. After exporting tracked data from XMALab, it is virtually impossible to reproduce a user's processing steps in Autodesk Maya (unless they have meticulously documented every mouse-click). Fortunately, the actual mathematic operations underlying most data processing in Maya are (relatively) straightforward and, thus, replicable in common programming languages.
+The XROMM_MayaTools shelf, the standard toolbox for XROMM data processing, is powerful and user-friendly but is not ideal for the programmatic automation of data analysis. After exporting tracked data from XMALab, it is virtually impossible to reproduce a user's processing steps in Autodesk Maya (unless they have meticulously documented every mouse-click). Fortunately, the actual mathematic operations underlying most data processing in Maya are (relatively) straightforward and, thus, replicable in other programming languages.
 
-_Overall, the motivation for performing these operations outside of Maya is to increase **reproducibility**, **transparency**, and **ease of batch processing** in XROMM projects._ 
+Overall, the **motivation** for performing these operations outside of Maya is to increase **reproducibility**, **transparency**, and **ease of batch processing** in XROMM projects. 
 
 ## Installation + Instructions 
 The [R](https://github.com/jdlaurence/xromm-tools/tree/main/R) and [MATLAB](https://github.com/jdlaurence/xromm-tools/tree/main/MATLAB) subfolders in this repository contain functionally identical versions of the toolkit; we tried our best to keep things consistent. There are, however, slight differences in terms of installation and usage, so be sure to follow the instructions for the language you wish to use (located in their respective subfolders).
 
+Both versions of the package include a tutorial script that walks you through package functionality. **Be sure to go there first!**
+
 ## Generalized Quickstart
 Regardless of implementation (R vs. MATLAB), the basic flow of data through the `xromm-tools` pipeline is the same. You'll need:  
+* A working knowledge of basic XROMM data analysis- i.e., anatomical coordinate systems (ACSs) and joint coordinate systems (JCSs)
 * This package installed
 * Autodesk Maya and the MayaTools shelf installed
 * Bone mesh models and corresponding rigid body transformations from XMALab  
