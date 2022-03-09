@@ -26,7 +26,7 @@ if ischar(filename) % assume it's a filename
     
     tmp = csvread(filename,1,0);
     % check if frame numbers
-    if rem(tmp,16) ~= 0
+    if rem(size(tmp,2),16) ~= 0
         frameNum = 1;
     else
         frameNum = 0;
