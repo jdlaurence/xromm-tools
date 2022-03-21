@@ -26,6 +26,11 @@ import_rbt <- function(filename){
     x <- filename
   }
 
+  #check if there are frame numbers (ncol should be divisible by 16)
+  if(ncol(x)%%16 == 1){
+    x <- x[,2:ncol(x)] # ignore first column, if there are frame numbers
+  }
+
   # Check number of rigid bodies
   n_rigid_bodies <- ncol(x) / 16
 
@@ -90,9 +95,11 @@ import_xyz_points <- function(filename){
     x <- filename
   }
 
-  # Because each marker has 3 columns. Two unused columns at the end mean we
-  # need to round down
-  n_points <- floor(ncol(x) / 3)
+  # Check if there are frame numbers (ncol should be divisible by 3)
+  if(ncol(x)%%3 == 1){
+    x <- x[,2:ncol(x)] # ignore first column, if there are frame numbers
+  }
+  n_points <- ncol(x) / 3
 
   # Make a list of each landmark's point matrices
   x_list <- list()
