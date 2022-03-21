@@ -290,7 +290,18 @@ convert_tm_to_jcs <- function(tm){
            )
     ang
   }
-
+  # Which frames have data?
+  detect_frames_with_data <- function(X, isTM){
+    new_isnan <- function(x) any(!is.nan(x))
+    if (isTM) {
+      frameIdx <- apply(X, MARGIN = c(3), FUN = new_isnan)
+    } else {
+      frameIdx <- apply(X, MARGIN = c(3,1), FUN = new_isnan)
+    }
+    frameIdx
+  }
+  frameIdx <- detect_frames_with_data(tm, isTM = TRUE)
+  
   n_col <- 6  # 3 translations, 3 rotations
 
   # Check format, needs to be 4 x 4 x n_frames
@@ -299,10 +310,12 @@ convert_tm_to_jcs <- function(tm){
     jcs_data <- matrix(NaN, nrow = n_frames, ncol = n_col)  # pre-allocate output
 
     for(fr in c(1:n_frames)){
+      if (frameIdx[fr]){  # if there's data for this frame
       translation <- tm[1:3, 4, fr]  # Translation
       # Decompose transformation to tait-bryan angles
       rotation <- rot2taitbryan(tm[1:3, 1:3, fr], "ZYX")
       jcs_data[fr,] <- c(translation, rotation[3], rotation[2], rotation[1])
+      }
     }
   }
   jcs_data
