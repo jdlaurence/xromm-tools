@@ -1,4 +1,7 @@
 # xromm-tools
+
+[![DOI](https://zenodo.org/badge/433590573.svg)](https://zenodo.org/badge/latestdoi/433590573)
+
 ![xromm-tools](https://user-images.githubusercontent.com/53494838/144144359-f118f0f4-9aab-4ba5-888a-2d77a5d76b5c.PNG)
 ## What is this? (and what isn't it?)
 This toolbox replicates the core functionality of the [XROMM_MayaTools](https://bitbucket.org/xromm/xromm_mayatools/wiki/Home) shelf and introduces a workflow for the batch processing of [XROMM](https://www.xromm.org/) (X-ray Reconstruction of Moving Morphology) data directly from XMALab. In bypassing Autodesk Maya, all downstream analysis (ACS + JCS calculation, statistics, figure generation, etc.) can be performed in a single programming environment (R or MATLAB). 
